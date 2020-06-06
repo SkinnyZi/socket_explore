@@ -91,7 +91,7 @@ def run_server():
 
     server_socket.bind((ADDRESS, PORT))  # Bind Address and port
     server_socket.listen()  # Listening. . .
-    logger.debug(f'\t{get_current_utc_time()} Server socket is listening. . .')
+    logger.debug(f'\t{get_current_utc_time()} Server socket is listening @ {ADDRESS}:{PORT}...')
 
     while True:
         client_socket, address = server_socket.accept()
