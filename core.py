@@ -1,8 +1,9 @@
-import socket
 import logging
+import socket
 from datetime import datetime
-
 from typing import Tuple
+
+from views import index
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('Socket Sandbox')
@@ -10,7 +11,7 @@ logger = logging.getLogger('Socket Sandbox')
 DATETIME_FORMAT = "%d-%m-%Y %H:%M:%S"
 
 URLS = {
-    '/': '<h1>I N D E X</h1>'
+    '/':  index,
 }
 
 
@@ -51,17 +52,19 @@ def create_headers(method: str, url: str) -> Tuple[str, int]:
     return 'HTTP/1.1 200 OK\n\n', 200
 
 
-def create_body(status_code, url) -> str:
+def create_body(status_code: int, url: str) -> str:
     if status_code == 404:
         return '<h3>404 Page Not Found</h3>'
 
     if status_code == 404:
         return '<h3>404 Method Not Allowed</h3>'
 
-    return URLS.get(url)
+    view = URLS.get(url)
+
+    return view()
 
 
-def create_response(method, url) -> bytes:
+def create_response(method: str, url: str) -> bytes:
     headers, status_code = create_headers(method, url)
     body = create_body(status_code, url)
 
