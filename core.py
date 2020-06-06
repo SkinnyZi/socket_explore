@@ -8,6 +8,9 @@ from views import index
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('Socket Sandbox')
 
+ADDRESS = '0.0.0.0'
+PORT = 8008
+
 DATETIME_FORMAT = "%d-%m-%Y %H:%M:%S"
 
 URLS = {
@@ -86,7 +89,7 @@ def run_server():
     #     1  # True
     # )
 
-    server_socket.bind(('127.0.0.1', 8008))  # Bind Address and port
+    server_socket.bind((ADDRESS, PORT))  # Bind Address and port
     server_socket.listen()  # Listening. . .
     logger.debug(f'\t{get_current_utc_time()} Server socket is listening. . .')
 
